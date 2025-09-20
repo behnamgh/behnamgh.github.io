@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X-ray Before & After</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif; line-height: 1.5; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+    header { margin-bottom: 16px; }
+    header a { text-decoration: none; color: inherit; opacity: .8; }
+    h1 { font-size: 24px; margin: 0 0 8px; }
+    section { margin: 24px 0; }
+    h2 { font-size: 20px; margin: 0 0 12px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .grid a { display: block; }
+    img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.12); background: #f4f4f4; cursor: zoom-in; }
+    footer { margin-top: 24px; font-size: 12px; opacity: .7; }
+  </style>
+  <link rel="icon" href="../images/favicon.png">
+  <link rel="preload" as="image" href="before/IMG_0.jpeg">
+  <link rel="preload" as="image" href="before/IMG_1.jpeg">
+  <link rel="preload" as="image" href="after/IMG_0.jpeg">
+  <link rel="preload" as="image" href="after/IMG_1.jpeg">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="X-ray before and after images">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>X-ray Comparison</h1>
+      <!-- <a href="../index.html">← Back to Home</a> -->
+    </header>
+
+    <section id="before">
+      <h2>Before</h2>
+      <div class="grid">
+        <a href="../xray/before/IMG_0.jpeg" rel="noopener noreferrer" title="Open full-size">
+          <img src="../xray/before/IMG_0.jpeg" alt="Before image 0" loading="eager">
+        </a>
+        <a href="../xray/before/IMG_1.jpeg" rel="noopener noreferrer" title="Open full-size">
+          <img src="../xray/before/IMG_1.jpeg" alt="Before image 1" loading="lazy">
+        </a>
+      </div>
+    </section>
+
+    <section id="after">
+      <h2>After</h2>
+      <div class="grid">
+        <a href="../xray/after/IMG_0.jpeg" rel="noopener noreferrer" title="Open full-size">
+          <img src="../xray/after/IMG_0.jpeg" alt="After image 0" loading="lazy">
+        </a>
+        <a href="../xray/after/IMG_1.jpeg" rel="noopener noreferrer" title="Open full-size">
+          <img src="../xray/after/IMG_1.jpeg" alt="After image 1" loading="lazy">
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <span>Images are displayed for comparison only.</span>
+    </footer>
+  </div>
+</body>
+</html>
+
+
