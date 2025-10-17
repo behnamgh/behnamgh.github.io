@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new view</title>
+    <style>
+        html, body { height: 100%; margin: 0; }
+        body { background: white; overflow: hidden; }
+        .container { display: flex; align-items: center; justify-content: center; height: 100vh; }
+        img.viewer { width: 75%; max-width: 100vw; max-height: 100vh; display: block; }
+        .hud { position: fixed; top: 12px; right: 16px; color: #fff; font: 14px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="container" >
+        <img id="viewer" class="viewer" src="im000001.jpg" alt="Slice 1">
+    </div>
+    <div class="hud" id="hud">1 / 15</div>
+    <script>
+        (function () {
+            var minIndex = 1;
+            var maxIndex = 15; // number of available images: im000001.jpg ... im000015.jpg
+            var currentIndex = 1;
+            var imagePrefix = "im";
+            var imageSuffix = ".jpg";
+            var viewer = document.getElementById("viewer");
+            var hud = document.getElementById("hud");
+
+            function toName(i) {
+                return imagePrefix + String(i).padStart(6, '0') + imageSuffix;
+            }
+
+            function updateHud() {
+                if (hud) hud.textContent = currentIndex + " / " + maxIndex;
+            }
+
+            function preload(index) {
+                if (index < minIndex || index > maxIndex) return;
+                var img = new Image();
+                img.src = toName(index);
+            }
+
+            function updateImage() {
+                var src = toName(currentIndex);
+                if (!viewer) return;
+                if (!viewer.src.endsWith(src)) {
+                    viewer.src = src;
+                }
+                updateHud();
+                preload(currentIndex + 1);
+                preload(currentIndex - 1);
+            }
+
+            var lastScrollTime = 0;
+            var throttleMs = 80; // adjust to taste
+
+            window.addEventListener('wheel', function (e) {
+                // map scroll up (deltaY < 0) -> next image, scroll down (deltaY > 0) -> previous image
+                e.preventDefault();
+                var now = Date.now();
+                if (now - lastScrollTime < throttleMs) return;
+                lastScrollTime = now;
+
+                if (e.deltaY < 0) {
+                    if (currentIndex < maxIndex) {
+                        currentIndex += 1;
+                        updateImage();
+                    }
+                } else if (e.deltaY > 0) {
+                    if (currentIndex > minIndex) {
+                        currentIndex -= 1;
+                        updateImage();
+                    }
+                }
+            }, { passive: false });
+
+            // Optional: arrow keys (up = next, down = previous)
+            window.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowUp') {
+                    if (currentIndex < maxIndex) { currentIndex += 1; updateImage(); }
+                } else if (e.key === 'ArrowDown') {
+                    if (currentIndex > minIndex) { currentIndex -= 1; updateImage(); }
+                }
+            });
+
+            // initial state sync
+            updateImage();
+        })();
+    </script>
+</body>
+</html>
