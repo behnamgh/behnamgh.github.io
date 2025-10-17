@@ -6,9 +6,9 @@
     <title>new view</title>
     <style>
         html, body { height: 100%; margin: 0; }
-        body { background: white; overflow: hidden; touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
-        .container { display: flex; align-items: center; justify-content: center; height: 100vh; touch-action: none; }
-        img.viewer { width: 75%; max-width: 100vw; max-height: 100vh; display: block; -webkit-user-drag: none; }
+        body { background: white; overflow: hidden; }
+        .container { display: flex; align-items: center; justify-content: center; height: 100vh; }
+        img.viewer { width: 75%; max-width: 100vw; max-height: 100vh; display: block; }
         .hud { position: fixed; top: 12px; right: 16px; color: #fff; font: 14px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; opacity: 0.6; }
     </style>
 </head>
@@ -20,7 +20,7 @@
     <script>
         (function () {
             var minIndex = 1;
-            var maxIndex = 27; // number of available images: im000001.jpg ... im000015.jpg
+            var maxIndex = 13; // number of available images: im000001.jpg ... im000015.jpg
             var currentIndex = 1;
             var imagePrefix = "im";
             var imageSuffix = ".jpg";
@@ -74,60 +74,6 @@
                     }
                 }
             }, { passive: false });
-
-            // Touch support for mobile: vertical swipe to navigate
-            var touchStartY = 0;
-            var touchLastY = 0;
-            var touchAccumulated = 0;
-            var touchStepPx = 24; // pixels per image step
-
-            function onTouchStart(e) {
-                if (!e.touches || e.touches.length === 0) return;
-                var t = e.touches[0];
-                touchStartY = t.clientY;
-                touchLastY = t.clientY;
-                touchAccumulated = 0;
-            }
-
-            function onTouchMove(e) {
-                if (!e.touches || e.touches.length === 0) return;
-                // prevent page from scrolling
-                e.preventDefault();
-                var t = e.touches[0];
-                var deltaY = t.clientY - touchLastY; // finger moving down => positive
-                touchLastY = t.clientY;
-                touchAccumulated += deltaY;
-
-                while (Math.abs(touchAccumulated) >= touchStepPx) {
-                    if (touchAccumulated > 0) {
-                        // finger moved down => go previous image
-                        if (currentIndex > minIndex) {
-                            currentIndex -= 1;
-                            updateImage();
-                        }
-                        touchAccumulated -= touchStepPx;
-                    } else {
-                        // finger moved up => go next image
-                        if (currentIndex < maxIndex) {
-                            currentIndex += 1;
-                            updateImage();
-                        }
-                        touchAccumulated += touchStepPx;
-                    }
-                }
-            }
-
-            function onTouchEnd() {
-                touchAccumulated = 0;
-            }
-
-            var el = document.querySelector('.container');
-            if (el) {
-                el.addEventListener('touchstart', onTouchStart, { passive: false });
-                el.addEventListener('touchmove', onTouchMove, { passive: false });
-                el.addEventListener('touchend', onTouchEnd);
-                el.addEventListener('touchcancel', onTouchEnd);
-            }
 
             // Optional: arrow keys (up = next, down = previous)
             window.addEventListener('keydown', function (e) {
